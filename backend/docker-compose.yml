@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb+srv://dhruvarcade27_db_user:JUtINeHgADsQbxe7@drsh.tvyzxgr.mongodb.net/?appName=drsh
+      - MONGODB_DB_NAME=creative_hub
+      - JWT_SECRET=${JWT_SECRET:-your-super-secret-jwt-key}
+      - LOVABLE_API_KEY=${LOVABLE_API_KEY:-}
+      - STORAGE_ROOT=/app/storage
+      - PUBLIC_URL_BASE=http://localhost:8000/storage/v1/object/public/assets
+      - FRONTEND_URL=http://localhost:5173
+      - CORS_ORIGINS=["http://localhost:5173","http://localhost:3000"]
+      - DEBUG=true
+    volumes:
+      - ./storage:/app/storage
+    restart: unless-stopped
+
+  # Optional: Local MongoDB (if not using Atlas)
+  # mongodb:
+  #   image: mongo:7
+  #   ports:
+  #     - "27017:27017"
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=password
+  #     - MONGO_INITDB_DATABASE=creative_hub
+  #   volumes:
+  #     - mongodb_data:/data/db
+
+# volumes:
+#   mongodb_data:
